@@ -41,7 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $pdo->prepare('UPDATE juegos SET cantidad = cantidad - ? WHERE id = ?');
             $stmt->execute([$cantidad, $juego_id]);
 
-            echo 'Compra realizada con éxito. Gracias por su compra.';
+            // Redirigir a la página de recibo con los detalles
+            header('Location: recibo.php?id=' . urlencode($juego_id) . '&cantidad=' . urlencode($cantidad) . '&total=' . urlencode($subtotal) . '&pagado=' . urlencode($total_pagado) . '&cambio=' . urlencode($cambio));
+            exit;
         } else {
             echo 'El total pagado es insuficiente para cubrir el subtotal.';
         }
